@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundSensor : MonoBehaviour {
+public class SoundSensor : Sensor {
 
-	// Use this for initialization
-	void Start () {
+    private void Awake()
+    {
+        _position = GetComponent<Transform>().position;
+        _orientation = GetComponent<Transform>().forward;
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -13,4 +19,15 @@ public class SoundSensor : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public override bool DetectsModality(Modality modality)
+    {
+        Debug.Log("Detects Modality - Sound Sensor");
+        return true;
+    }
+
+    public override void Notify(Signal signal)
+    {
+        Debug.Log("Notify");
+    }
 }

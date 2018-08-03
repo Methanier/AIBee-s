@@ -12,10 +12,27 @@ struct Notification
 
 public class RegionalSenseManager : MonoBehaviour {
 
+    public static RegionalSenseManager SenseManager;
+
+    [SerializeField]
     private List<Sensor> _sensors;
     private List<Notification> notificationQueue;
 
-    void AddSignal(Signal signal)
+    private void Awake()
+    {
+        if(SenseManager == null)
+        {
+            SenseManager = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        notificationQueue = new List<Notification>();
+    }
+
+    public void AddSignal(Signal signal)
     {
         //List<Sensor> validSensors = new List<Sensor>();
         float distance;
