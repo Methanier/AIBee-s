@@ -6,7 +6,6 @@ public class SoundModality : Modality {
 
     public override bool ExtraChecks(Signal inSignal, Sensor inSensor)
     {
-        Debug.Log("Sound Modality - Extra Checks");
         return true;
     }
 }

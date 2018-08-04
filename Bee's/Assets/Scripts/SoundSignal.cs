@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class SoundSignal : Signal {
 
-	// Use this for initialization
-	void Start ()
+    private void Awake()
+    {
+        _position = GetComponent<Transform>().position;
+    }
+
+    // Use this for initialization
+    void Start ()
     {
 
 	}

@@ -112,7 +112,7 @@ public class InputController : MonoBehaviour
             _movementController.RotateEntity(_xAxis);
         }           
 
-        /*    
+            
         if (Input.GetButtonDown(_pauseButtonName))
         {
             if(GameState.State.IsPaused)
@@ -127,7 +127,7 @@ public class InputController : MonoBehaviour
                 GameState.State.IsPaused = true;
             }
             
-        }*/
+        }
 
         /*
         if(Input.GetButtonDown(_interactButtonName))

@@ -51,7 +51,8 @@ public class RegionalSenseManager : MonoBehaviour {
             }
 
             //Find the distance and check range
-            distance = (signal.Postion - sens.Position).magnitude;
+            Vector3 signalToSenseVector = signal.Postion - sens.Position;
+            distance = signalToSenseVector.magnitude;
             if(signal.GetModality.MaxRange <  distance)
             {
                 continue;
@@ -80,17 +81,19 @@ public class RegionalSenseManager : MonoBehaviour {
             notificationQueue.Add(notify);
         }
 
-        SendSignals();
+        if (notificationQueue.Count > 0)
+            StartCoroutine("SendSignals");
     }
 
-    void SendSignals()
+    IEnumerator SendSignals()
     {
         //Notification Phase
 
-        float currentTime = Time.time;
+        float currentTime;
 
         while(notificationQueue.Count > 0)
-        { 
+        {
+            currentTime = Time.time;
             //Looks are first element in list
             Notification nextNotify = notificationQueue[0];
 
@@ -100,6 +103,7 @@ public class RegionalSenseManager : MonoBehaviour {
                 notificationQueue.RemoveAt(0);                      //Removes first element in list
                 notificationQueue.Sort(CompareNotifcationTimes);    //Sorts list by notification time
             }
+            yield return null;
         }
     }
 

@@ -22,10 +22,10 @@ public class MovementController : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         _tf = GetComponent<Transform>();
         _col = GetComponent<CapsuleCollider>();
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInChildren<Rigidbody>();
         _rb.mass = _thisData.Mass;
         _currentMoveSpeed = _thisData.MoveSpeed;
         IsSprinting = false;

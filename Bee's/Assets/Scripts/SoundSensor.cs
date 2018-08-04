@@ -22,12 +22,11 @@ public class SoundSensor : Sensor {
 
     public override bool DetectsModality(Modality modality)
     {
-        Debug.Log("Detects Modality - Sound Sensor");
         return true;
     }
 
     public override void Notify(Signal signal)
     {
-        Debug.Log("Notify");
+
     }
 }

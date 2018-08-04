@@ -1094,6 +1094,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 444884}
+  - component: {fileID: 65225171069273360}
   m_Layer: 0
   m_Name: Well
   m_TagString: Untagged
@@ -1594,8 +1595,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 186502}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.900871, y: 0.02, z: -1.0489578}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 194.27, y: 1.08, z: 227.03}
   m_LocalScale: {x: 0.68403065, y: 0.68403065, z: 0.68403065}
   m_Children:
   - {fileID: 466600}
@@ -5314,3 +5315,15 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 186502}
   m_IsPrefabParent: 1
+--- !u!65 &65225171069273360
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 186502}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.725455, y: 2.960048, z: 4.6724887}
+  m_Center: {x: 0.026218595, y: 0.59058046, z: 0.122881144}
