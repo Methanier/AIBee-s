@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameState : MonoBehaviour {
+public class GameState : MonoBehaviour
+{
 
     public static GameState State;
 
@@ -19,14 +20,4 @@ public class GameState : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

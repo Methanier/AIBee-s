@@ -8,34 +8,44 @@ public class MovementController : MonoBehaviour
     [Tooltip("Data Object for this Entity")]
     [SerializeField]
     private EntityData _thisData;
+    [Tooltip("Collider on the left foot")]
+    [SerializeField]
+    private CapsuleCollider _leftFootCollider;
+    [Tooltip("Collider on the right foot")]
+    [SerializeField]
+    private CapsuleCollider _rightFootCollider;
 
     private Animator _animator;
     private Transform _tf;
-    private CapsuleCollider _col;
     private Rigidbody _rb;
+    private VisionTests _visionController;
 
     private float _currentMoveSpeed;
     private float _velocity = 0f;
 
     public bool IsSprinting { get; set; }
     public bool IsMoving { get; set; }
+    public bool IsStealth { get; set; }
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
         _tf = GetComponent<Transform>();
-        _col = GetComponent<CapsuleCollider>();
         _rb = GetComponentInChildren<Rigidbody>();
+        _visionController = GetComponent<VisionTests>();
         _rb.mass = _thisData.Mass;
         _currentMoveSpeed = _thisData.MoveSpeed;
         IsSprinting = false;
+        IsMoving = false;
+        IsStealth = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         CheckIsSprinting();
+        CheckIsMoving();
+        CheckStealthState();
     }
 
     public void MoveHorizontal(float x)
@@ -93,13 +103,32 @@ public class MovementController : MonoBehaviour
     {
         if (IsGrounded())
         {
+            IsMoving = true;
             _rb.AddForce(Vector3.up * _thisData.JumpForce, ForceMode.Impulse);
         }
     }
 
     bool IsGrounded()
     {
-        return Physics.CheckCapsule(_col.bounds.center, new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z), _col.radius * 0.9f, _thisData.GroundLayers);
+        if(_leftFootCollider != null && _rightFootCollider != null)
+        {
+            if(Physics.CheckCapsule(_leftFootCollider.bounds.center, new Vector3(_leftFootCollider.bounds.center.x, _leftFootCollider.bounds.min.y, _leftFootCollider.bounds.center.z), _leftFootCollider.radius * 0.9f, _thisData.GroundLayers))
+            {
+                return true;
+            }
+            else if(Physics.CheckCapsule(_rightFootCollider.bounds.center, new Vector3(_rightFootCollider.bounds.center.x, _rightFootCollider.bounds.min.y, _rightFootCollider.bounds.center.z), _rightFootCollider.radius * 0.9f, _thisData.GroundLayers))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }        
     }
 
     void CheckIsSprinting()
@@ -111,6 +140,36 @@ public class MovementController : MonoBehaviour
         else
         {
             _currentMoveSpeed = Mathf.SmoothDamp(_currentMoveSpeed, _thisData.MoveSpeed, ref _velocity, _thisData.SprintTransitionSpeed);
+        }
+    }
+
+    void CheckIsMoving()
+    {
+        if(_animator.GetFloat("Horizontal") == 0 && _animator.GetFloat("Vertical") == 0 && IsGrounded())
+        {
+            IsMoving = false;
+        }
+        else
+        {
+            IsMoving = true;
+        }
+    }
+
+    void CheckStealthState()
+    {
+        if(IsStealth)
+        {
+            if(IsMoving)
+            {
+                IsStealth = false;
+                return;
+            }
+
+            _visionController.Vision.GetModality.Attenuation = 0;
+        }
+        else
+        {
+            _visionController.Vision.GetModality.ResetAttenuation();
         }
     }
 }

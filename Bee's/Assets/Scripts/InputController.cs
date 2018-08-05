@@ -6,7 +6,6 @@ using Cinemachine;
 public class InputController : MonoBehaviour
 {
 
-
     [Header("Input Names")]
     [Tooltip("Name of x axis (Left and right movement) in input settings")]
     [SerializeField]
@@ -35,6 +34,10 @@ public class InputController : MonoBehaviour
     [Tooltip("Name of interact button in input settings")]
     [SerializeField]
     private string _interactButtonName;
+
+    [Tooltip("Name of stealth button")]
+    [SerializeField]
+    private string _stealthButtonName;
 
     [Tooltip("Name of Pause button in input settings")]
     [SerializeField]
@@ -112,7 +115,7 @@ public class InputController : MonoBehaviour
             _movementController.RotateEntity(_xAxis);
         }           
 
-            
+        
         if (Input.GetButtonDown(_pauseButtonName))
         {
             if(GameState.State.IsPaused)
@@ -132,7 +135,25 @@ public class InputController : MonoBehaviour
         /*
         if(Input.GetButtonDown(_interactButtonName))
         {
-
+            //pickup
         }*/
+
+
+        if(Input.GetButtonDown(_stealthButtonName))
+        {
+            if(_movementController.IsStealth)
+            {
+                Debug.Log("Leaveing Stealth");
+                _movementController.IsStealth = false;
+            }
+            else
+            {
+                if (!_movementController.IsMoving)
+                {
+                    Debug.Log("Stealthing");
+                    _movementController.IsStealth = true;
+                }
+            }
+        }
     }
 }
