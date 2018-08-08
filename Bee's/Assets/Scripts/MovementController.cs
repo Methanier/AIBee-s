@@ -161,6 +161,7 @@ public class MovementController : MonoBehaviour
         {
             if(IsMoving)
             {
+                Debug.Log("Leaving Stealth");
                 IsStealth = false;
                 return;
             }
